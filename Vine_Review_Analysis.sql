@@ -52,18 +52,26 @@ SELECT COUNT(review_id) AS total_5star_reviews
 FROM vine_table
 WHERE star_rating = 5;
 
+-- Get total number of 5 star reviews from paid
+SELECT COUNT (review_id) AS total_5star_vine_reviews
+FROM vine_table
+WHERE star_rating =5 AND vine ='Y';
+
+-- Get total number of 5 star reviews from unpaid
+SELECT COUNT (review_id) AS total_5star_nonvine_reviews
+FROM vine_table
+WHERE star_rating =5 AND vine ='N';
+
 -- Get percentage of 5 star reviews for paid
 SELECT (SELECT CAST(COUNT(review_id) AS FLOAT)
 		FROM vine_table
 		WHERE star_rating = 5 AND vine = 'Y')/
 		(SELECT CAST(COUNT(review_id) AS FLOAT)
-		FROM vine_table
-		WHERE star_rating = 5)*100 AS percentage_paid_reviews;
+		FROM vine_table)*100 AS percentage_vine_reviews;
 
 -- Get percentage of 5 star reviews for unpaid
 SELECT (SELECT CAST(COUNT(review_id) AS FLOAT)
 		FROM vine_table
 		WHERE star_rating = 5 AND vine = 'N')/
 		(SELECT CAST(COUNT(review_id) AS FLOAT)
-		FROM vine_table
-		WHERE star_rating = 5)*100 AS percentage_unpaid_reviews;
+		FROM vine_table)*100 AS percentage_nonvine_reviews;
